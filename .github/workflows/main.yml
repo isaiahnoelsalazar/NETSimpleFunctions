@@ -29,17 +29,20 @@ jobs:
       id: get_version
       shell: pwsh
       run: |
-        $path = "Properties/AssemblyInfo.cs"
+        $path = "${{ vars.CS_PROJ_PATH }}"
         if (!(Test-Path $path)) { 
             Write-Error "File not found at $path"; exit 1 
         }
-        $content = Get-Content $path -Raw
-        if ($content -match '\[assembly: AssemblyVersion\("(.*)"\)\]') {
-            $ver = $Matches[1]
+        
+        [xml]$project = Get-Content $path
+        
+        $ver = $project.Project.PropertyGroup.AssemblyVersion
+
+        if ($ver) {
             echo "VERSION=$ver" >> $env:GITHUB_OUTPUT
-            echo "Found version: $ver"
+            Write-Host "Found version: $ver"
         } else {
-            Write-Error "Could not find version in AssemblyInfo.cs"
+            Write-Error "Could not find <AssemblyVersion> in $path"
             exit 1
         }
 
@@ -47,11 +50,11 @@ jobs:
       run: nuget restore ${{ vars.CS_PROJ_PATH }}
 
     - name: Build Project
-      run: msbuild ${{ vars.CS_PROJ_PATH }} /p:Configuration=Release /p:Platform=AnyCPU /p:RepositoryUrl=${{ github.event.repository.html_url }} /p:RepositoryType=git
+      run: msbuild ${{ vars.CS_PROJ_PATH }} /p:Configuration=Release /p:Platform=AnyCPU
 
     - name: Create NuGet Package
       run: |
-        nuget pack ${{ vars.CS_PROJ_PATH }} -OutputDirectory bin\Release -NoPackageAnalysis -Properties "Configuration=Release;Platform=AnyCPU;RepositoryUrl=${{ github.event.repository.html_url }};RepositoryType=git"
+        nuget pack ${{ vars.CS_PROJ_PATH }} -OutputDirectory bin\Release -NoPackageAnalysis -Properties "Configuration=Release;Platform=AnyCPU"
 
     - name: Upload NuGet package to GitHub
       uses: actions/upload-artifact@v4
