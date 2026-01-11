@@ -1,0 +1,88 @@
+name: Build & Publish NuGet to GitHub Registry
+
+on:
+  push:
+    branches: [master]
+
+permissions:
+  contents: write
+  packages: write
+
+jobs:
+  build:
+    runs-on: windows-latest
+    outputs: 
+      Version: ${{ steps.get_version.outputs.VERSION }}
+
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0 
+
+    - name: Setup MSBuild
+      uses: microsoft/setup-msbuild@v2
+
+    - name: Setup NuGet
+      uses: NuGet/setup-nuget@v2
+
+    - name: Get Version from AssemblyInfo
+      id: get_version
+      shell: pwsh
+      run: |
+        $path = "Properties/AssemblyInfo.cs"
+        if (!(Test-Path $path)) { 
+            Write-Error "File not found at $path"; exit 1 
+        }
+        $content = Get-Content $path -Raw
+        if ($content -match '\[assembly: AssemblyVersion\("(.*)"\)\]') {
+            $ver = $Matches[1]
+            echo "VERSION=$ver" >> $env:GITHUB_OUTPUT
+            echo "Found version: $ver"
+        } else {
+            Write-Error "Could not find version in AssemblyInfo.cs"
+            exit 1
+        }
+
+    - name: Restore NuGet Packages
+      run: nuget restore ${{ vars.CS_PROJ_PATH }}
+
+    - name: Build Project
+      run: msbuild ${{ vars.CS_PROJ_PATH }} /p:Configuration=Release /p:Platform=AnyCPU /p:RepositoryUrl=${{ github.event.repository.html_url }} /p:RepositoryType=git
+
+    - name: Create NuGet Package
+      run: |
+        nuget pack ${{ vars.CS_PROJ_PATH }} -OutputDirectory bin\Release -NoPackageAnalysis -Properties "Configuration=Release;Platform=AnyCPU;RepositoryUrl=${{ github.event.repository.html_url }};RepositoryType=git"
+
+    - name: Upload NuGet package to GitHub
+      uses: actions/upload-artifact@v4
+      with:
+        name: nugetPackage
+        path: bin/Release/*.nupkg
+
+  release:
+    runs-on: windows-latest
+    needs: build
+    if: github.ref == 'refs/heads/master'
+    
+    steps: 
+    - name: Download nuget package artifact
+      uses: actions/download-artifact@v4
+      with:
+        name: nugetPackage
+        path: nugetPackage
+
+    - name: Push package to GitHub packages 
+      run: |
+        dotnet nuget add source --username ${{ vars.USERNAME }} --password ${{ secrets.NUGET_PACKAGE_TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/${{ vars.USERNAME }}/index.json"
+        dotnet nuget push nugetPackage\*.nupkg --api-key ${{ secrets.NUGET_PACKAGE_TOKEN }} --source "github" --skip-duplicate
+
+    - name: Publish to NuGet.org
+      run: dotnet nuget push nugetPackage\*.nupkg --api-key ${{ secrets.NUGET_APIKEY }} --source https://api.nuget.org/v3/index.json --skip-duplicate
+    
+    - name: Create Release
+      uses: ncipollo/release-action@v1.13.0
+      with:
+        tag: ${{ needs.build.outputs.Version }}
+        name: Release ${{ needs.build.outputs.Version }}
+        artifacts: "nugetPackage/*"
+        token: ${{ secrets.GITHUB_TOKEN }}
