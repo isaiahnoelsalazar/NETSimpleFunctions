@@ -39,7 +39,7 @@ jobs:
         $ver = $project.Project.PropertyGroup.AssemblyVersion
 
         if ($ver) {
-            echo "VERSION=$ver" >> $env:GITHUB_OUTPUT
+            echo "VERSION=$ver" >> $Env:GITHUB_OUTPUT
             Write-Host "Found version: $ver"
         } else {
             Write-Error "Could not find <AssemblyVersion> in $path"
