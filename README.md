@@ -1,4 +1,4 @@
-﻿﻿# How to install?
+﻿# How to install?
 ### In Visual Studio
 #### Step 1
 - Go to "Tools > NuGet Package Manager > Manage NuGet Packages for Solution"
@@ -14,6 +14,7 @@ dotnet add package NETSimpleFunctions --version [latest release version]
 # Available methods
 - [Check](#check)
 - [Convert](#convert)
+- [Memory](#memory)
 - [SimpleFileHandler](#simplefilehandler)
 
 ## Check
@@ -111,6 +112,59 @@ byte[] byteArray = Convert.ToByteArray("Sample text");
 ```csharp
 byte[] byteArray = Convert.ToByteArray("Sample text");
 string temp = Convert.FromByteArray(byteArray);
+```
+## Memory
+### Initialization
+```csharp
+Memory<AnyClassType> memory = new Memory<AnyClassType>();
+
+// Or
+
+Memory<string> memory = new Memory<string>(); // something general like this
+```
+### Add
+- adds an item to memory
+```csharp
+AnyClassType item = new AnyClassType();
+memory.Add(item);
+
+// Or
+
+memory.Add("Sample text");
+```
+### Contains
+- checks if memory contains an item
+```csharp
+bool contains = memory.Contains(new AnyClassType());
+```
+### Remove
+- removes an item from memory
+```csharp
+memory.Remove(item); // assuming 'item' already exists in memory
+```
+### RemoveAt
+- removes an item from memory at a specific index
+```csharp
+memory.RemoveAt(1);
+```
+### Get
+- returns an item from memory at a specific index
+```csharp
+AnyClassType item = memory.Get(0);
+
+// Or
+
+string text = memory.Get(0);
+```
+### Count
+- returns the number of items in memory
+```csharp
+int count = memory.Count();
+```
+### Clear
+- clears all items in memory
+```csharp
+memory.Clear();
 ```
 ## SimpleFileHandler
 ### Write
