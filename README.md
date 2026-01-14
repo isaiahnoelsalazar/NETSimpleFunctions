@@ -13,6 +13,7 @@ dotnet add package NETSimpleFunctions --version [latest release version]
 
 # Available methods
 - [Check](#check)
+- [Cipher](#cipher)
 - [Convert](#convert)
 - [Memory](#memory)
 - [SimpleFileHandler](#simplefilehandler)
@@ -82,6 +83,11 @@ Check.Email.ShouldUseFullDomain(false);
 Check.Email.IsValid("test@gmail.com"); // returns true
 Check.Email.IsValid("test@outlook.com"); // returns false
 Check.Email.IsValid("test@asd.com"); // returns false
+```
+## Cipher
+### TranspositionCipher
+```csharp
+Cipher.TranspositionCipher("Sample text");
 ```
 ## Convert
 ### Reverse
