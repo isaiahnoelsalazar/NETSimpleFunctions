@@ -16,6 +16,7 @@ dotnet add package NETSimpleFunctions --version [latest release version]
 - [Convert](#convert)
 - [Memory](#memory)
 - [SimpleFileHandler](#simplefilehandler)
+- [Sort](#sort)
 
 ## Check
 ### HasNumbers
@@ -190,4 +191,9 @@ SimpleFileHandler.ProjectToLocation(Assembly.GetExecutingAssembly(), "SampleClas
 // Or
 
 SimpleFileHandler.ProjectToLocation(Assembly.GetExecutingAssembly(), "SampleClass.cs", "path/to/destination");
+```
+## Sort
+### BubbleSort
+```csharp
+Sort.BubbleSort(new int[]{ 10, 8, 52, 27, 63, 95, 6, 46 });
 ```
