@@ -46,6 +46,9 @@ jobs:
             exit 1
         }
 
+    - name: Restore project
+      run: dotnet restore -v n
+
     - name: Create NuGet config file
       run: dotnet new nugetconfig
 
