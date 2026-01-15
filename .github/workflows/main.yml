@@ -46,12 +46,6 @@ jobs:
             exit 1
         }
 
-    - name: Restore project
-      run: dotnet restore -v n
-
-    - name: Create NuGet config file
-      run: dotnet new nugetconfig
-
     - name: Build and create NuGet Package
       run: dotnet pack ${{ vars.CS_PROJ_PATH }} -p:Version='${{ steps.get_version.outputs.Version }}' -c Release
 
