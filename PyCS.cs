@@ -39,9 +39,7 @@ namespace NETSimpleFunctions
                 }
                 try
                 {
-                    FileStream zip = File.Create("python-3.13.5-embed-amd64.zip");
-                    Assembly.GetExecutingAssembly().GetManifestResourceStream("NETSimpleFunctions.python-3.13.5-embed-amd64.zip").CopyTo(zip);
-                    zip.Close();
+                    SimpleFileHandler.ProjectToLocation(Assembly.GetExecutingAssembly(), "python-3.13.5-embed-amd64.zip");
                 }
                 catch
                 {
@@ -90,9 +88,7 @@ namespace NETSimpleFunctions
                         string extractPath1 = "python3_13\\python313";
                         ZipFile.ExtractToDirectory(zipPath1, extractPath1);
 
-                        FileStream sitecustomize = File.Create("python3_13\\sitecustomize.py");
-                        Assembly.GetExecutingAssembly().GetManifestResourceStream("NETSimpleFunctions.sitecustomize.py").CopyTo(sitecustomize);
-                        sitecustomize.Close();
+                        SimpleFileHandler.ProjectToLocation(Assembly.GetExecutingAssembly(), "sitecustomize.py", "python3_13");
                     }
                     catch
                     {

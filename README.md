@@ -16,6 +16,7 @@ dotnet add package NETSimpleFunctions --version [latest release version]
 - [Cipher](#cipher)
 - [Convert](#convert)
 - [Memory](#memory)
+- [PyCS](#pycs)
 - [SimpleFileHandler](#simplefilehandler)
 - [Sort](#sort)
 
@@ -172,6 +173,59 @@ int count = memory.Count();
 - clears all items in memory
 ```csharp
 memory.Clear();
+```
+## PyCS
+Run Python 3.12 scripts and commands from C#
+### Initialization
+```csharp
+PyCS pycs = new PyCS();
+
+// Or
+
+PyCS pycs = new PyCS(true); // default value
+PyCS pycs = new PyCS(false); // no console messages
+```
+### InstallPip
+- download and install pip for PyCS
+```csharp
+pycs.InstallPip();
+```
+### Pip
+- starts a pip install command
+```csharp
+pycs.Pip(new string[]
+{
+	"numpy"
+});
+```
+### PipLocal
+- starts a pip install command for already downloaded .whl files
+```csharp
+pycs.PipLocal(new string[]
+{
+	"numpy-2.2.6-cp312-cp312-win32.whl",
+	"opencv_python-4.12.0.88-cp37-abi3-win32.whl"
+});
+```
+### Run
+- runs a given Python script in a string value
+```csharp
+pycs.Run("print('Hello')"); // prints "Hello" in the console
+```
+### RunFile
+- runs a given Python script in a given file path
+```csharp
+pycs.RunFile("scripts/hello.py"); // prints "Hello" in the console
+```
+### GetOutput
+- runs a given Python script in a string value and returns the console message in a string value
+```csharp
+string text = pycs.GetOutput("print('Hello')"); // returns "Hello"
+```
+### GetFileOutput
+- runs a given Python script in a given file path and returns the console message in a string value
+```csharp
+string text = pycs.GetFileOutput("scripts/hello.py"); // returns "Hello"
 ```
 ## SimpleFileHandler
 ### Write
