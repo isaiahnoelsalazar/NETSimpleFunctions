@@ -5,17 +5,17 @@
 	<!--<TargetFramework>net10.0</TargetFramework>-->
 	
 	<!-- FOR BUILDING -->
-	<TargetFramework>net6.0</TargetFramework>
+	<TargetFrameworks>net6.0;net45</TargetFrameworks>
     
 	<ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <PackageReadmeFile>README.md</PackageReadmeFile>
-    <AssemblyVersion>1.0.7</AssemblyVersion>
-    <FileVersion>1.0.7</FileVersion>
+    <AssemblyVersion>1.0.8</AssemblyVersion>
+    <FileVersion>1.0.8</FileVersion>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
     <RepositoryUrl>https://github.com/isaiahnoelsalazar/NETSimpleFunctions</RepositoryUrl>
-    <Version>1.0.7</Version>
+    <Version>1.0.8</Version>
   </PropertyGroup>
 
   <ItemGroup>
