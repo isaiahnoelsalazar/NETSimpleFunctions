@@ -7,7 +7,7 @@
 	<!-- FOR BUILDING -->
 	<TargetFrameworks>net6.0;net45</TargetFrameworks>
 
-	<LangVersion>8.0</LangVersion>
+	<LangVersion>10.0</LangVersion>
 	<ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <PackageReadmeFile>README.md</PackageReadmeFile>
