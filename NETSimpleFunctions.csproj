@@ -5,7 +5,7 @@
 	<!--<TargetFramework>net10.0</TargetFramework>-->
 	
 	<!-- FOR BUILDING -->
-	<TargetFrameworks>net6.0;net45</TargetFrameworks>
+	<TargetFrameworks>net6.0;net472</TargetFrameworks>
 
 	<LangVersion>10.0</LangVersion>
 	<ImplicitUsings>enable</ImplicitUsings>
