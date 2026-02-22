@@ -39,7 +39,9 @@ namespace NETSimpleFunctions
                 }
                 try
                 {
-                    SimpleFileHandler.ProjectToLocation(Assembly.GetExecutingAssembly(), "python-3.13.5-embed-amd64.zip");
+                    FileStream zip = File.Create("python-3.13.5-embed-amd64.zip");
+                    Assembly.GetExecutingAssembly().GetManifestResourceStream("NETSimpleFunctions.python-3.13.5-embed-amd64.zip").CopyTo(zip);
+                    zip.Close();
                 }
                 catch
                 {

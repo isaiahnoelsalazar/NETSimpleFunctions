@@ -6,18 +6,18 @@
 	<ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <PackageReadmeFile>README.md</PackageReadmeFile>
-    <AssemblyVersion>1.0.11</AssemblyVersion>
-    <FileVersion>1.0.11</FileVersion>
+    <AssemblyVersion>1.0.12</AssemblyVersion>
+    <FileVersion>1.0.12</FileVersion>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
     <RepositoryUrl>https://github.com/isaiahnoelsalazar/NETSimpleFunctions</RepositoryUrl>
-    <Version>1.0.11</Version>
+    <Version>1.0.12</Version>
   </PropertyGroup>
 
-  <!--<ItemGroup>
+  <ItemGroup>
     <None Remove="python-3.13.5-embed-amd64.zip" />
     <None Remove="sitecustomize.py" />
-  </ItemGroup>-->
+  </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="python-3.13.5-embed-amd64.zip" />
