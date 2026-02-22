@@ -254,6 +254,22 @@ namespace NETSimpleFunctions
             }
         }
 
+        public void PipLocalNoDeps(string[] args)
+        {
+            ProcessStartInfo PIS = new ProcessStartInfo();
+            PIS.FileName = "python3_13\\Scripts\\pip.exe";
+            PIS.Arguments = "install " + string.Join(" ", args) + " --no-deps --no-index --find-links /";
+            PIS.UseShellExecute = false;
+            PIS.RedirectStandardOutput = true;
+            PIS.CreateNoWindow = Console;
+            Process = Process.Start(PIS);
+            StreamReader reader = Process.StandardOutput;
+            if (Console)
+            {
+                System.Console.WriteLine(reader.ReadToEnd());
+            }
+        }
+
         public void Stop()
         {
             if (!Process.HasExited)
