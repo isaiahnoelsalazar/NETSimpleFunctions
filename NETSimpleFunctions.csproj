@@ -14,10 +14,10 @@
     <Version>1.0.10</Version>
   </PropertyGroup>
 
-  <ItemGroup>
+  <!--<ItemGroup>
     <None Remove="python-3.13.5-embed-amd64.zip" />
     <None Remove="sitecustomize.py" />
-  </ItemGroup>
+  </ItemGroup>-->
 
   <ItemGroup>
     <EmbeddedResource Include="python-3.13.5-embed-amd64.zip" />
