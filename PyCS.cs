@@ -90,7 +90,9 @@ namespace NETSimpleFunctions
                         string PythonZipExtractPath1 = "python3_13\\python313";
                         ZipFile.ExtractToDirectory(PythonZipPath1, PythonZipExtractPath1);
 
-                        SimpleFileHandler.ProjectToLocation(Assembly.GetExecutingAssembly(), "sitecustomize.py", "python3_13");
+                        FileStream sitecustomize = File.Create("python3_13\\sitecustomize.py");
+                        Assembly.GetExecutingAssembly().GetManifestResourceStream("NETSimpleFunctions.sitecustomize.py").CopyTo(sitecustomize);
+                        sitecustomize.Close();
                     }
                     catch
                     {
